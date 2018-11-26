@@ -16,6 +16,7 @@
             -- ID search
             $({el:'#region'})
             $({el:'.container', document: ".informer"})
+            $({el:'.container', document: DOM_OBJECTS})
 
 
 * CREATE:

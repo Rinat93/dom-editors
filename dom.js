@@ -81,8 +81,12 @@ class DOM_J {
     async formating_elements(el){
         // Если есть родитель где именно искать то нужно запомнить
         if (this.options["document"] && this.documents === undefined) {
-            let documents = this.options["document"];
-            await this.documents_href(documents);
+            if (typeof this.options["document"] === 'string') {
+                let documents = this.options["document"];
+                await this.documents_href(documents);
+            } else if (typeof this.options['document'] === 'object') {
+                this.documents = this.options['document']
+            }
         }
         if (el.startsWith('#')){
             await this.id_elements(el)
