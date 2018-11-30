@@ -43,9 +43,14 @@
        
        new dom_j().init("create",{type:"a", root:"-.profile-header", id:"sections-23",body:"Привет ",href:"#"})
        
-       new dom_j().init("create",{type:"div", root:"-.profile-header", id:"sections-23", child:[{type:"p",body:"Кликни меня", href:"#", tasks:[{type:'click', func:function(){ console.log("Ура")} }]}]})
+       new dom_j().init("create",{type:"div", root:"-.profile-header", id:"sections-23",className:"", child:[{type:"p",body:"Кликни меня", href:"#", tasks:[{type:'click', func:function(){ console.log("Ура")} }]}]})
        
        new dom_j().init("create",{type:"div", root:"-.profile-header", id:"sections-23", child:[{type:"p",body:"Кликни меня", href:"#"}], tasks:[{type:'click', func:function(){ console.log("Ура")} }]})
+
+* new:
+       attributes: {key:KEY, value: VALUE} or attributes: [{...}]
+
+       class rename in className
 
 Используется другая моя библиотека event-machine для создания событии, почитать документацию по ней можно тут:
     

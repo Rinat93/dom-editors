@@ -41,7 +41,7 @@ class DOM_J {
 
     // Запускаем процесс поиска
     async start_j(el){
-        console.log(el);
+        // console.log(el);
         if (Array.isArray(el)){
             for (let i of el) {
                 this.formating_elements(i);
@@ -89,11 +89,11 @@ class DOM_J {
             }
         }
         if (el.startsWith('#')){
-            await this.id_elements(el)
+            await this.id_elements(el);
         } else if (el.startsWith(".")){
-            await this.class_elements(el)
+            await this.class_elements(el);
         } else if (el.startsWith("@")){
-            await this.name_elements(el)
+            await this.name_elements(el);
         }
     }
 
@@ -111,7 +111,7 @@ class DOM_J {
     }
     // Выбор по ID
     async id_elements(el){
-        console.log(this.documents);
+        // console.log(this.documents);
         if (this.documents === undefined) {
             this.append_res(document.getElementById(el.slice(1)));
         } else {

@@ -20,6 +20,9 @@
 *   new dom_j().init("create",{type:"a", root:"-.profile-header", id:"sections-23",body:"Привет ",href:"#"})
 *   new dom_j().init("create",{type:"div", root:"-.profile-header", id:"sections-23", child:[{type:"p",body:"Кликни меня", href:"#", tasks:[{type:'click', func:function(){ console.log("Ура")} }]}]})
 *   new dom_j().init("create",{type:"div", root:"-.profile-header", id:"sections-23", child:[{type:"p",body:"Кликни меня", href:"#"}], tasks:[{type:'click', func:function(){ console.log("Ура")} }]})
+* new:
+*   attributes: {key:KEY, value: VALUE} or attributes: [{...}]
+*    class rename className
 * */
 import {DOM_J} from "./dom.js";
 import {Events} from "./events.js";
@@ -56,15 +59,24 @@ class Create_Dom extends DOM_J {
         if (elements.type){
             let cr_el = document.createElement(elements.type);
             cr_el.id = elements.id !== undefined ? elements.id  : '';
-            cr_el.className = elements.class !== undefined ? elements.class  : '';
+            cr_el.className = elements.className !== undefined ? elements.className  : '';
             cr_el.name = elements.name !== undefined? elements.name : '';
+            if (elements.attributes){
+                if (Array.isArray(elements.attributes)){
+                    for (let i of elements.attributes) {
+                        cr_el.setAttribute(i.key, i.value);
+                    }
+                } else {
+                    cr_el.setAttribute(elements.attributes.key, elements.attributes.value);
+                }
+            }
             if (elements.type === "a")
                 cr_el.href = elements.href !== undefined ? elements.href  : '';
             if (elements.type === "img")
                 cr_el.src = elements.src !== undefined ? elements.src : '';
             else
                 cr_el.innerText = elements.body !== undefined  ? elements.body : '';
-            console.log(cr_el);
+            // console.log(cr_el);
             await this.positions_append(cr_el, elements.root);
             if (elements.child){
                 this.add_child(elements.child, cr_el)
@@ -118,7 +130,7 @@ class Create_Dom extends DOM_J {
             if (typeof position_el === "string") {
                 let pos = this.filter({el: position_el.slice(1)});
                 pos.then((el) => {
-                    console.log(el);
+                    // console.log(el);
                     this.add_pos(el[0], elements,pos_el)
                 })
             } else if (typeof position_el === "object"){
