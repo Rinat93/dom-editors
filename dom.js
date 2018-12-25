@@ -27,6 +27,7 @@ class DOM_J {
         this.name_elements = this.name_elements.bind(this);
         this.documents_href = this.documents_href.bind(this);
         this.append_res = this.append_res.bind(this);
+        this.append_for_hack = this.append_for_hack.bind(this);
     }
 
     // Инициализируем запуск поиска
@@ -94,14 +95,31 @@ class DOM_J {
             await this.class_elements(el);
         } else if (el.startsWith("@")){
             await this.name_elements(el);
+        } else {
+            await this.id_elements(el);
         }
     }
-
+    // В случае вложенных результатов
+    async append_for_hack(el){
+        if (Array.isArray(el)){
+            for (let k of el){
+                if (Array.isArray(k)){
+                    this.append_for_hack(k)
+                } else {
+                    this.result.push(k);
+                }
+            }
+        } else {
+            this.result.push(el);
+        }
+    }
     // Добавляем в результат
     append_res(el){
         if (Array.isArray(el)) {
             if (el.length > 0) {
-                this.result.push(el);
+                for (let k of el) {
+                    this.append_for_hack(k)
+                }
             } else {
                 console.log("entry");
             }
@@ -115,7 +133,7 @@ class DOM_J {
         if (this.documents === undefined) {
             this.append_res(document.getElementById(el.slice(1)));
         } else {
-            this.append_res(this.documents.querySelectorAll(el));
+            this.append_res(Array.prototype.slice.call(this.documents.querySelectorAll(el)));
         }
     }
 
